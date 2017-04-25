@@ -1,16 +1,17 @@
-# Basic Rake tutorial: http://lukaszwrobel.pl/blog/rake-tutoria
 # List all available tasks via: "bundle exec rake -T"
+require "rake/testtask"
 require 'sinatra/activerecord/rake'
 
-# 'namespace' gives us tasks like: "rake db:do_this, rake db:do_that  "
 namespace :db do
   task :load_config do
     require './assassin-server.rb'
   end
 end
 
-task :test do
-  puts 'Test!'
+Rake::TestTask.new(:test) do |t|
+  t.libs << "test"
+  t.libs << "lib"
+  t.test_files = FileList['test/**/*_test.rb']
 end
 
 task :default => :test
