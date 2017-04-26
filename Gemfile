@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 source 'https://rubygems.org'
+ruby '2.4.0'
 
 gem 'sinatra', '~> 1.4.7'  # Our chosen web app framework
 gem "sinatra-activerecord", '2.0.13' # Our chosen ORM for any SQL database
@@ -10,7 +11,7 @@ gem 'rack',    '~> 1.6.5'  # HTTP handling
 
 group :development, :test do
   gem 'sqlite3',   '1.3.13'     # Avoid upgrading database version without testing
-  gem 'pry',       '~> 0.10.4'  # Ruby debugger 
+  gem 'pry',       '~> 0.10.4'  # Ruby debugger
   gem 'pry-byebug', '~> 3.4.2'   # Get continue/next/step/etc. debugging commands
 end
 
