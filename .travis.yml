@@ -3,3 +3,8 @@ language: ruby
 rvm:
   - 2.4.0
 before_install: gem install bundler -v 1.14.6
+script:
+  - bundle exec rake db:create
+  - bundle exec rake db:schema:load # Running all migrations is unreliable
+  # - bundle exec rake db:seed # TODO: Seed or load fixtures before testing
+  - bundle exec rake test
