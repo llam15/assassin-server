@@ -12,6 +12,10 @@ require "sinatra/activerecord"
 class Player < ActiveRecord::Base
 end
 
+class Game < ActiveRecord::Base
+  has_many :players
+end
+
 module Assassin
   VERSION = '0.1.0'
 
