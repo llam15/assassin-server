@@ -1,7 +1,8 @@
 #!usr/bin/env ruby
 require "sinatra/base"
 require "sinatra/activerecord"
-
+require "pry"
+require "../../db/models/player.rb"
 module Assassin
   VERSION = "0.1.0"
 
@@ -15,6 +16,7 @@ module Assassin
       'Hello world'
     end
 
+    Pry.start
     run! if app_file == $0
 
   end
