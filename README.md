@@ -1,5 +1,7 @@
 # Assassin::Server
 
+![Travis CI](https://travis-ci.org/llam15/assassin-server.svg?branch=master)
+
 Completed for CS M117 during the Spring 2017 quarter at UCLA. 
 
 Team: 
@@ -39,5 +41,5 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/llam15
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+`assassin-server` is an open source project, with its code under the terms of the [MIT License](http://opensource.org/licenses/MIT).
 
