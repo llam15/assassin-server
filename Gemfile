@@ -9,10 +9,13 @@ gem 'rerun',   '~> 0.11.0' # Out-of-process reloader for Ruby apps
 gem 'rake',    '~> 12.0.0' # Make-like build tool, but easier-to-use
 gem 'rack',    '~> 1.6.5'  # HTTP handling
 
+# TODO: Use Postgres for prod + test environments
 group :development, :test do
-  gem 'sqlite3',   '1.3.13'     # Avoid upgrading database version without testing
-  gem 'pry',       '~> 0.10.4'  # Ruby debugger
-  gem 'pry-byebug', '~> 3.4.2'   # Get continue/next/step/etc. debugging commands
+  gem 'sqlite3',   '1.3.13'       # Avoid upgrading database version without testing
+  gem 'pry',       '~> 0.10.4'    # Ruby debugger
+  gem 'pry-byebug', '~> 3.4.2'    # Get continue/next/step/etc. debugging commands
+  gem 'awesome_print', '~> 1.7.0' # Pretty-print anything
+  # gem 'annotate',   '~> 2.7'    # Annotates our data models for ActiveRecord
 end
 
 group :test do
