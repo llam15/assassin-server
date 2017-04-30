@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) 2017 binerys
+Copyright (c) 2017 Breanna Nery, Ky-Cuong Huynh, Lauren Yeung, Leslie Lam, Michelle Chang
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
