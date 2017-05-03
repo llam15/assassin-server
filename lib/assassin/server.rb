@@ -11,6 +11,7 @@ require "sinatra/activerecord"
 
 # TODO: Move models into separate files
 class Player < ActiveRecord::Base
+  belongs_to :game
 end
 
 class Game < ActiveRecord::Base
@@ -33,9 +34,8 @@ module Assassin
       'Hello world'
     end
 
-    # TODO: specify a game ID
     get '/game/players' do
-      Player.all.to_json
+      @global_game.players.to_json
     end
 
     # Receives { username: <username> }
@@ -47,7 +47,10 @@ module Assassin
       unless Game.first.nil?
         'A global game already exists'
       else
-        @game = Game.create(status: 'SettingUp')
+        @global_game = Game.create(status: 'SettingUp')
+        game_master = Player.new(username: username, role: 'GameMaster', alive: true)
+        game_master.game = @global_game
+        game_master.save
       end
     end
 
