@@ -4,7 +4,7 @@ require 'sinatra/activerecord/rake'
 
 namespace :db do
   task :load_config do
-    require './assassin-server.rb'
+    require './lib/assassin/server'
   end
 end
 
