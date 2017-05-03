@@ -15,7 +15,6 @@ group :development, :test do
   gem 'pry',       '~> 0.10.4'    # Ruby debugger
   gem 'pry-byebug', '~> 3.4.2'    # Get continue/next/step/etc. debugging commands
   gem 'awesome_print', '~> 1.7.0' # Pretty-print anything
-  # gem 'annotate',   '~> 2.7'    # Annotates our data models for ActiveRecord
 end
 
 group :test do
