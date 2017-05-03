@@ -35,7 +35,7 @@ module Assassin
     end
 
     get '/game/players' do
-      @global_game.players.to_json
+      Game.first.players.to_json
     end
 
     # Receives { username: <username> }
@@ -47,7 +47,7 @@ module Assassin
       unless Game.first.nil?
         'A global game already exists'
       else
-        @global_game = Game.create(status: 'SettingUp')
+        global_game = Game.create(status: 'SettingUp')
         game_master = Player.new(username: username, role: 'GameMaster', alive: true)
         game_master.game = @global_game
         game_master.save
