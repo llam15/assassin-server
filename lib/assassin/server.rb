@@ -35,11 +35,15 @@ module Assassin
     end
 
     get '/game/players' do
-      Game.first.players.to_json
+      if Game.first
+        Game.first.players.to_json
+      else
+        status 404
+      end  
     end
 
     get '/game' do
-      unless Game.first.nil?
+      if Game.first
         Game.first.to_json
       else
         status 404
@@ -50,12 +54,10 @@ module Assassin
     post '/game/join' do
       parsed_request_body = JSON.parse (request.body.read)
       username = parsed_request_body['username']
-
-      # TODO: Check if username is unique 
       
       # While we have Game ID's, only have 1 game globally for now
       # If a game already exists, add player as a participant
-      unless Game.first.nil?
+      if Game.first
         participant = Player.new(username: username, role: 'Participant', alive: true)
         participant.game = Game.first
         participant.save
