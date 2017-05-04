@@ -39,17 +39,22 @@ module Assassin
     end
 
     # Receives { username: <username> }
-    post '/game/create' do
+    post '/game/join' do
       parsed_request_body = JSON.parse (request.body.read)
       username = parsed_request_body['username']
 
+      # TODO: Check if username is unique 
+      
       # While we have Game ID's, only have 1 game globally for now
+      # If a game already exists, add player as a participant
       unless Game.first.nil?
-        'A global game already exists'
+        participant = Player.new(username: username, role: 'Participant', alive: true)
+        participant.game = Game.first
+        participant.save
       else
         global_game = Game.create(status: 'SettingUp')
         game_master = Player.new(username: username, role: 'GameMaster', alive: true)
-        game_master.game = @global_game
+        game_master.game = global_game
         game_master.save
       end
     end
