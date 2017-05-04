@@ -38,6 +38,14 @@ module Assassin
       Game.first.players.to_json
     end
 
+    get '/game' do
+      unless Game.first.nil?
+        Game.first.to_json
+      else
+        status 404
+      end
+    end
+
     # Receives { username: <username> }
     post '/game/join' do
       parsed_request_body = JSON.parse (request.body.read)
