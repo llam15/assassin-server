@@ -70,6 +70,17 @@ module Assassin
       end
     end
 
+    # Expects /game/validate?username=[username]
+    # Will determine if username is unique
+    get '/game/validate' do
+      username = params[:username]
+      if Player.find_by username: username
+        status 403
+      else
+        status 200
+      end
+    end
+
     # Allow direct execution of the app via 'ruby server.rb'
     run! if app_file == $0
   end
