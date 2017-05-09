@@ -14,6 +14,7 @@ class Player < ActiveRecord::Base
   belongs_to :game
 end
 
+# TODO: Validate game status (ensure it follows the standard we set)
 class Game < ActiveRecord::Base
   has_many :players
 
@@ -52,7 +53,7 @@ module Assassin
 
     # Receives { username: <username> }
     post '/game/join' do
-      parsed_request_body = JSON.parse (request.body.read)
+      parsed_request_body = JSON.parse(request.body.read)
       username = parsed_request_body['username']
       
       # While we have Game ID's, only have 1 game globally for now
