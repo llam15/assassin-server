@@ -10,12 +10,11 @@ gem 'rake',    '~> 12.0.0' # Make-like build tool, but easier-to-use
 gem 'rack',    '~> 1.6.5'  # HTTP handling
 gem 'json',    '~> 2.1.0'  # JSON handling
 
-# TODO: Use Postgres for prod + test environments
 group :development, :test do
-  gem 'sqlite3',   '1.3.13'       # Avoid upgrading database version without testing
-  gem 'pry',       '~> 0.10.4'    # Ruby debugger
-  gem 'pry-byebug', '~> 3.4.2'    # Get continue/next/step/etc. debugging commands
-  gem 'awesome_print', '~> 1.7.0' # Pretty-print anything
+  gem 'pg',             '0.20.0'      # Avoid upgrading database version without testing
+  gem 'pry',            '~> 0.10.4'   # Ruby debugger
+  gem 'pry-byebug',     '~> 3.4.2'    # Get continue/next/step/etc. debugging commands
+  gem 'awesome_print',  '~> 1.7.0'    # Pretty-print anything
 end
 
 group :test do

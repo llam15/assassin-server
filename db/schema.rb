@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20170430225741) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "games", force: :cascade do |t|
     t.string "status"
   end
@@ -23,7 +26,7 @@ ActiveRecord::Schema.define(version: 20170430225741) do
     t.float   "latitude"
     t.float   "longitude"
     t.integer "game_id"
-    t.index ["game_id"], name: "index_players_on_game_id"
+    t.index ["game_id"], name: "index_players_on_game_id", using: :btree
   end
 
 end

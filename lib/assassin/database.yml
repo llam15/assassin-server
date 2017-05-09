@@ -3,9 +3,9 @@
 
 # TODO: store production secrets outside of source control
 development:
-  adapter: sqlite3
-  database: 'development.sqlite3'
+  adapter: postgresql
+  database: dev_database
 
 test:
-  adapter: sqlite3
-  database: 'test.sqlite3'
+  adapter: postgresql
+  database: test_database
