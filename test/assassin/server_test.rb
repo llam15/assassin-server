@@ -3,7 +3,7 @@ require 'test_helper'
 class Assassin::ServerTest < Minitest::Test
   include Rack::Test::Methods
 
-  def app 
+  def app
     Assassin::AssassinServer
   end
 
@@ -17,4 +17,6 @@ class Assassin::ServerTest < Minitest::Test
     assert last_response.ok?
     assert_equal 'Hello world', last_response.body
   end
+
+  # TODO: should not be able to save a Player w/o an associated game
 end

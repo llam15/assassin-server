@@ -9,11 +9,18 @@
 require "sinatra/base"
 require "sinatra/activerecord"
 
+# TODO: Move models into separate files
 class Player < ActiveRecord::Base
+  belongs_to :game
 end
 
+# TODO: Validate game status (ensure it follows the standard we set)
 class Game < ActiveRecord::Base
   has_many :players
+
+  def players
+    @players = Player.all.select { |player| player.game_id == self.id }
+  end
 end
 
 module Assassin
@@ -29,7 +36,38 @@ module Assassin
     end
 
     get '/game/players' do
-      Player.all.to_json
+      if Game.first
+        Game.first.players.to_json
+      else
+        status 404
+      end  
+    end
+
+    get '/game' do
+      if Game.first
+        Game.first.to_json
+      else
+        status 404
+      end
+    end
+
+    # Receives { username: <username> }
+    post '/game/join' do
+      parsed_request_body = JSON.parse(request.body.read)
+      username = parsed_request_body['username']
+      
+      # While we have Game ID's, only have 1 game globally for now
+      # If a game already exists, add player as a participant
+      if Game.first
+        participant = Player.new(username: username, role: 'Participant', alive: true)
+        participant.game = Game.first
+        participant.save
+      else
+        global_game = Game.create(status: 'SettingUp')
+        game_master = Player.new(username: username, role: 'GameMaster', alive: true)
+        game_master.game = global_game
+        game_master.save
+      end
     end
 
     # Allow direct execution of the app via 'ruby server.rb'

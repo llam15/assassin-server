@@ -8,6 +8,7 @@ gem 'thin',    '~> 1.7.0'  # Basic web server
 gem 'rerun',   '~> 0.11.0' # Out-of-process reloader for Ruby apps
 gem 'rake',    '~> 12.0.0' # Make-like build tool, but easier-to-use
 gem 'rack',    '~> 1.6.5'  # HTTP handling
+gem 'json',    '~> 2.1.0'  # JSON handling
 
 # TODO: Use Postgres for prod + test environments
 group :development, :test do
