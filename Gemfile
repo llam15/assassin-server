@@ -9,12 +9,13 @@ gem 'rerun',   '~> 0.11.0' # Out-of-process reloader for Ruby apps
 gem 'rake',    '~> 12.0.0' # Make-like build tool, but easier-to-use
 gem 'rack',    '~> 1.6.5'  # HTTP handling
 gem 'json',    '~> 2.1.0'  # JSON handling
+gem 'pg',      '0.20.0'    # Avoid upgrading database version without testing
 
 group :development, :test do
-  gem 'pg',             '0.20.0'      # Avoid upgrading database version without testing
   gem 'pry',            '~> 0.10.4'   # Ruby debugger
   gem 'pry-byebug',     '~> 3.4.2'    # Get continue/next/step/etc. debugging commands
   gem 'awesome_print',  '~> 1.7.0'    # Pretty-print anything
+  gem 'tux',           '~> 0.3.0'  # App console
 end
 
 group :test do
