@@ -9,3 +9,7 @@ development:
 test:
   adapter: postgresql
   database: test_database
+
+production:
+  adapter: postgresql
+  database: prod_database
