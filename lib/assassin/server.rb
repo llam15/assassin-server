@@ -80,6 +80,16 @@ module Assassin
         status 200
       end
     end
+    
+    post '/game/start' do
+      if Game.first
+        Game.first.update(status: 'InProgress')
+      else
+        puts "Game start called before game created"
+        status 404
+      end
+    end
+    
 
     # Allow direct execution of the app via 'ruby server.rb'
     run! if app_file == $0
