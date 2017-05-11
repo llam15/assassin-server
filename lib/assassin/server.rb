@@ -24,6 +24,11 @@ class Game < ActiveRecord::Base
 end
 
 class TargetAssignment < ActiveRecord::Base
+  
+  def self.add_new_assignment(player_id, target_id)
+    TargetAssignment.create(player_id: player_id, target_id: target_id)
+  end
+
   def self.lookup_assignment(player_id)
     if (TargetAssignment.exists?(:player_id => player_id))
       player = TargetAssignment.find_by(player_id: player_id)
