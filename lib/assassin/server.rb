@@ -38,6 +38,11 @@ class TargetAssignment < ActiveRecord::Base
       return nil 
     end
   end
+
+  def update_assignment(new_target_id)
+    self.target_id = new_target_id
+    self.save
+  end
 end
 
 module Assassin
