@@ -23,6 +23,18 @@ class Game < ActiveRecord::Base
   end
 end
 
+class TargetAssignment < ActiveRecord::Base
+  def self.lookup_assignment(player_id)
+    if (TargetAssignment.exists?(:player_id => player_id))
+      player = TargetAssignment.find_by(player_id: player_id)
+      player.target_id
+    else
+      puts "No target assignment for player with id #{player_id} exists"
+      return nil 
+    end
+  end
+end
+
 module Assassin
   VERSION = '0.1.0'
 
@@ -74,7 +86,7 @@ module Assassin
     # Will determine if username is unique
     get '/game/validate' do
       username = params[:username]
-      if Player.find_by username: username
+      if Player.find_by(username: username)
         status 403
       else
         status 200
