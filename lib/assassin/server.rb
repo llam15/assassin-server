@@ -24,18 +24,18 @@ class Game < ActiveRecord::Base
 end
 
 class TargetAssignment < ActiveRecord::Base
-  
+
   def self.add_new_assignment(player_id, target_id)
     TargetAssignment.create(player_id: player_id, target_id: target_id)
   end
 
   def self.lookup_assignment(player_id)
-    if (TargetAssignment.exists?(:player_id => player_id))
+    if (TargetAssignment.exists?(player_id: player_id))
       player = TargetAssignment.find_by(player_id: player_id)
       player.target_id
     else
       puts "No target assignment for player with id #{player_id} exists"
-      return nil 
+      return nil
     end
   end
 
@@ -62,7 +62,7 @@ module Assassin
         Game.first.players.to_json
       else
         status 404
-      end  
+      end
     end
 
     get '/game' do
@@ -77,7 +77,7 @@ module Assassin
     post '/game/join' do
       parsed_request_body = JSON.parse(request.body.read)
       username = parsed_request_body['username']
-      
+
       # While we have Game ID's, only have 1 game globally for now
       # If a game already exists, add player as a participant
       if Game.first
@@ -102,7 +102,7 @@ module Assassin
         status 200
       end
     end
-    
+
     post '/game/start' do
       if Game.first
         Game.first.update(status: 'InProgress')
@@ -111,7 +111,7 @@ module Assassin
         status 404
       end
     end
-    
+
 
     # Allow direct execution of the app via 'ruby server.rb'
     run! if app_file == $0
