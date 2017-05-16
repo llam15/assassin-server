@@ -16,7 +16,7 @@ end
 
 # TODO: Validate game status (ensure it follows the standard we set)
 class Game < ActiveRecord::Base
-  has_many :players
+  has_many :players, dependent: :destroy
 
   def players
     @players = Player.all.select { |player| player.game_id == self.id }
