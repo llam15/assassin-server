@@ -127,8 +127,8 @@ module Assassin
         else
           puts "A participant is leaving the lobby"
           player.destroy
-        status 200
         end
+      status 200
       else
         puts "Player not in lobby"
         status 404
