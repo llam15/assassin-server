@@ -1,4 +1,4 @@
-Game.create({:status => 'SettingUp'})
+Game.create({status: 'SettingUp'})
 
 gm = Player.new(username: 'gm', role: 'GameMaster', alive: true)
 gm.game = Game.first
