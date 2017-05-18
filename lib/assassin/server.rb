@@ -107,23 +107,28 @@ module Assassin
       # Multiple target assignments are avoided by
       # dumping all assignments between games
       if global_game
-        global_game.update(status: 'InProgress')
-        shuffled_players = global_game.players.shuffle
-
-        # Circular, singly-linked list target assignment
-        shuffled_players.each_with_index do |player, index|
-          # Special case: last player -> first player
-          if index == shuffled_players.size - 1
-            TargetAssignment.add_new_assignment(
-              player.id, shuffled_players[0].id
-            )
-          else
-            TargetAssignment.add_new_assignment(
-              player.id, shuffled_players[index + 1].id
-            )
+        if global_game.status == 'InProgress'
+          puts "Game has already begun and is in progress"
+          status 403
+        else
+          global_game.update(status: 'InProgress')
+          shuffled_players = global_game.players.shuffle
+  
+          # Circular, singly-linked list target assignment
+          shuffled_players.each_with_index do |player, index|
+            # Special case: last player -> first player
+            if index == shuffled_players.size - 1
+              TargetAssignment.add_new_assignment(
+                player.id, shuffled_players[0].id
+              )
+            else
+              TargetAssignment.add_new_assignment(
+                player.id, shuffled_players[index + 1].id
+              )
+            end
           end
-        end
-        status 200
+          status 200
+        end 
       else
         puts "Game start called before game created"
         status 404
