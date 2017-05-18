@@ -158,6 +158,25 @@ module Assassin
       end
     end
 
+    # Expects /game/target?username=[username]
+    # Will determine the username's target
+    get '/game/target' do
+      username = params[:username]
+      player = Player.find_by(username: username)
+      if player
+        target_id = TargetAssignment.lookup_assignment(player.id)
+        if target_id
+          target_username = Player.find_by(id: target_id).username 
+          return { target: target_username }.to_json
+        else # Target_id is nil
+          return { target: "" }.to_json
+        end
+        status 200
+      else
+        status 404
+      end
+    end
+
     # Allow direct execution of the app via 'ruby server.rb'
     run! if app_file == $0
   end
