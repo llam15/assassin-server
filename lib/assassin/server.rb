@@ -123,6 +123,7 @@ module Assassin
             )
           end
         end
+        status 200
       else
         puts "Game start called before game created"
         status 404
