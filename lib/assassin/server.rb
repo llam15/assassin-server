@@ -16,7 +16,7 @@ end
 
 # TODO: Validate game status (ensure it follows the standard we set)
 class Game < ActiveRecord::Base
-  has_many :players
+  has_many :players, dependent: :destroy
 
   def players
     @players = Player.all.select { |player| player.game_id == self.id }
@@ -112,6 +112,28 @@ module Assassin
       end
     end
 
+    # Receives {username: <username>}
+    # Used for a user leaving the lobby
+    # Will end game if game master leaves
+    post '/game/leave' do
+      parsed_request_body = JSON.parse(request.body.read)
+      username = parsed_request_body['username']
+      player = Player.find_by(username: username)
+      if player
+        if player.role == "GameMaster"
+          puts "GameMaster leaving game! Delete global game object"
+          Game.first.destroy
+          TargetAssignment.delete_all
+        else
+          puts "A participant is leaving the lobby"
+          player.destroy
+        end
+      status 200
+      else
+        puts "Player not in lobby"
+        status 404
+      end
+    end
 
     # Allow direct execution of the app via 'ruby server.rb'
     run! if app_file == $0
