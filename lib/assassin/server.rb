@@ -167,9 +167,9 @@ module Assassin
         target_id = TargetAssignment.lookup_assignment(player.id)
         if target_id
           target_username = Player.find_by(id: target_id).username 
-          return {target: target_username}.to_json
+          return { target: target_username }.to_json
         else # Target_id is nil
-          return {target: ""}.to_json
+          return { target: "" }.to_json
         end
         status 200
       else
