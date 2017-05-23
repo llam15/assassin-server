@@ -37,10 +37,17 @@ class TargetAssignment < ActiveRecord::Base
       return nil
     end
   end
-
-  def update_assignment(new_target_id)
-    self.target_id = new_target_id
-    self.save
+  
+  def self.update_assignment(player_id, new_target_id)
+    if ((TargetAssignment.exists?(player_id: player_id)) && 
+        (TargetAssignment.exists?(player_id: new_target_id)))
+        
+        player = TargetAssignment.find_by(player_id: player_id)
+        player.update(target_id: new_target_id)
+      else 
+        puts "Id(s) are not valid"
+        return nil
+    end
   end
 end
 
@@ -157,6 +164,44 @@ module Assassin
         status 404
       end
     end
+  
+    # Hunter has killed its target and takes a new target (victim's target)
+    # of the form /game/kill?hunter=user1&target=user2
+    post '/game/kill' do
+      parsed_request_body = JSON.parse(request.body.read)
+      hunter = Player.find_by(username: parsed_request_body['hunter'])
+      target = Player.find_by(username: parsed_request_body['target'])
+      
+      # Assign new target to hunter & set victim's target to nil
+      # If there is one player left, they will get assigned to themselves
+      new_target_id = TargetAssignment.lookup_assignment(target.id)
+      TargetAssignment.update_assignment(hunter.id, new_target_id)
+      TargetAssignment.update_assignment(target.id, nil)
+      
+      # Mark victim as "dead" (= not alive)
+      target.update(alive: false)
+    end
+    
+    # Expects /game/target?username=[username]
+    # Will determine the username's target
+    get '/game/target' do
+      username = params[:username]
+      player = Player.find_by(username: username)
+      if player
+        target_id = TargetAssignment.lookup_assignment(player.id)
+        if target_id
+          target_username = Player.find_by(id: target_id).username 
+          return { target: target_username }.to_json
+        else # Target_id is nil
+          return { target: "" }.to_json
+        end
+        status 200
+      else
+        status 404
+      end
+    end
+
+
 
     # Allow direct execution of the app via 'ruby server.rb'
     run! if app_file == $0
