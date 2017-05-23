@@ -190,8 +190,11 @@ module Assassin
       else
         player = Player.find_by(username: username)
         if player
+          puts 'Found player!'
           player.latitude = latitude
           player.longitude = longitude
+          player.save
+          status 200
         else
           puts 'Cannot find player'
           status 404
