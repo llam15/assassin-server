@@ -177,6 +177,28 @@ module Assassin
       end
     end
 
+    # Receives {username: <username>; latitude: <latitude>; longitude: <longitude>}
+    post '/game/location' do
+      req = JSON.parse(request.body.read)
+      username = req['username']
+      latitude = req['latitude']
+      longitude = req['longitude']
+
+      if latitude == nil or longitude == nil
+        puts 'Missing latitude/longitude'
+        status 403
+      else
+        player = Player.find_by(username: username)
+        if player
+          player.latitude = latitude
+          player.longitude = longitude
+        else
+          puts 'Cannot find player'
+          status 404
+        end
+      end
+    end
+
     # Allow direct execution of the app via 'ruby server.rb'
     run! if app_file == $0
   end
