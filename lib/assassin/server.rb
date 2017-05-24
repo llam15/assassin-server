@@ -6,8 +6,9 @@
 #
 # https://stackoverflow.com/questions/6766482/how-to-organize-models-in-sinatra
 
-require "sinatra/base"
-require "sinatra/activerecord"
+require 'sinatra/base'
+require 'sinatra/activerecord'
+require 'geocoder'
 
 # TODO: Move models into separate files
 class Player < ActiveRecord::Base
