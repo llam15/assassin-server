@@ -48,7 +48,7 @@ class TargetAssignment < ActiveRecord::Base
       hunter = TargetAssignment.find_by(target_id: player_id)
       hunter.player_id
     else
-      puts "No hunter for player wtih id #{player_id} exists"
+      puts "No hunter for player with id #{player_id} exists"
       return nil
     end
   end
