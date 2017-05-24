@@ -51,6 +51,8 @@ module Assassin
     # Centralize database config details in one place
     register Sinatra::ActiveRecordExtension
     set :database_file, 'database.yml'
+    # Use kilometers for our calculations for easier conversion
+    Geocoder.configure(units: :km)
 
     get '/hello_world' do
       'Hello world'
