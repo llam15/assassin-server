@@ -180,6 +180,11 @@ module Assassin
       
       # Mark victim as "dead" (= not alive)
       target.update(alive: false)
+      
+      # Change Game status if there is one person alive = end condition
+      if new_target_id == hunter.id
+        Game.first.update(status: 'Ended')
+      end
     end
     
     # Expects /game/target?username=[username]
