@@ -235,6 +235,27 @@ module Assassin
       end
     end
 
+    # Expects: /game/hint?hunter=user1&target=user2
+    get '/game/hint' do
+      hunter = Player.find_by(username: params[:hunter])
+      target = Player.find_by(username: params[:target]) 
+
+      if hunter && target
+        hunter_loc = [hunter.latitude, hunter.longitude]
+        target_loc = [target.latitude, target.longitude]
+        distance = Geocoder::Calculations.distance_between(hunter_loc, target_loc)
+        # Convert to meters and approximate
+        distance_in_meters = (distance*1000).round(-1)
+        if (distance_in_meters == 0)
+          distance_in_meters = 10
+        end
+        return { distance: distance_in_meters }.to_json
+      else
+        status 404
+      end
+      
+    end
+
     # Allow direct execution of the app via 'ruby server.rb'
     run! if app_file == $0
   end
