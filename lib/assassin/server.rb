@@ -184,19 +184,16 @@ module Assassin
       latitude = req['latitude']
       longitude = req['longitude']
 
-      if latitude == nil or longitude == nil
-        puts 'Missing latitude/longitude'
+      if latitude == nil || longitude == nil
         status 403
       else
         player = Player.find_by(username: username)
         if player
-          puts 'Found player!'
           player.latitude = latitude
           player.longitude = longitude
           player.save
           status 200
         else
-          puts 'Cannot find player'
           status 404
         end
       end
