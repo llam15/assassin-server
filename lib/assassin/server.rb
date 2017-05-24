@@ -29,12 +29,26 @@ class TargetAssignment < ActiveRecord::Base
     TargetAssignment.create(player_id: player_id, target_id: target_id)
   end
 
+  # Find the target for a given player
+  # Returns the target's ID
   def self.lookup_assignment(player_id)
-    if (TargetAssignment.exists?(player_id: player_id))
+    if TargetAssignment.exists?(player_id: player_id)
       player = TargetAssignment.find_by(player_id: player_id)
       player.target_id
     else
       puts "No target assignment for player with id #{player_id} exists"
+      return nil
+    end
+  end
+
+  # Find the hunter of a given player
+  # Returns the hunter's ID
+  def self.reverse_lookup_assignment(player_id)
+    if TargetAssignment.exists?(player_id: player_id)
+      hunter = TargetAssignment.find_by(target_id: player_id)
+      hunter.player_id
+    else
+      puts "No hunter for player with id #{player_id} exists"
       return nil
     end
   end
@@ -47,6 +61,7 @@ end
 
 module Assassin
   VERSION = '0.1.0'
+  KILL_RADIUS = 0.003 # kilometers, i.e., 3 meters
 
   class AssassinServer < Sinatra::Application
     # Centralize database config details in one place
@@ -180,7 +195,9 @@ module Assassin
       end
     end
 
-    # Receives {username: <username>; latitude: <latitude>; longitude: <longitude>}
+    # Receives { "username": <username>; "latitude": <latitude>; "longitude": <longitude> }
+    # Responds with { "ready_for_kill": true/false, "in_danger": true/false, "alive": true/false }
+    # We thus update their world awareness as hunter/hunted, and their current alive/dead status
     post '/game/location' do
       req = JSON.parse(request.body.read)
       username = req['username']
@@ -192,12 +209,28 @@ module Assassin
       else
         player = Player.find_by(username: username)
         if player
-          player.latitude = latitude
-          player.longitude = longitude
-          player.save
+          player.update(latitude: latitude, longitude: longitude)
+          player_location = [player.latitude, player.longitude]
+
+          target = Player.find_by(id: TargetAssignment.lookup_assignment(player.id))
+          target_location = [target.latitude, target.longitude] if target
+
+          hunter = Player.find_by(id: TargetAssignment.reverse_lookup_assignment(player.id))
+          hunter_location = [hunter.latitude, hunter.longitude] if hunter
+
+          # Are we close enough to kill our target?
+          ready_for_kill = Geocoder::Calculations.distance_between(player_location, target_location) < KILL_RADIUS
+          # Is our hunter close enough to kill us?
+          in_danger = Geocoder::Calculations.distance_between(player_location, hunter_location) < KILL_RADIUS
+
           status 200
+          return { ready_for_kill: ready_for_kill,
+                   in_danger: in_danger,
+                   alive: player.alive
+                 }.to_json
         else
           status 404
+          return {}
         end
       end
     end
