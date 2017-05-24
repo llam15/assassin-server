@@ -6,8 +6,9 @@
 #
 # https://stackoverflow.com/questions/6766482/how-to-organize-models-in-sinatra
 
-require "sinatra/base"
-require "sinatra/activerecord"
+require 'sinatra/base'
+require 'sinatra/activerecord'
+require 'geocoder'
 
 # TODO: Move models into separate files
 class Player < ActiveRecord::Base
@@ -51,6 +52,8 @@ module Assassin
     # Centralize database config details in one place
     register Sinatra::ActiveRecordExtension
     set :database_file, 'database.yml'
+    # Use kilometers for our calculations for easier conversion
+    Geocoder.configure(units: :km)
 
     get '/hello_world' do
       'Hello world'
