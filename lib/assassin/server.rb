@@ -41,7 +41,7 @@ class TargetAssignment < ActiveRecord::Base
   
   def self.update_assignment(player_id, new_target_id)
     if ((TargetAssignment.exists?(player_id: player_id)) && 
-        (TargetAssignment.exists?(player_id: new_target_id)))
+        (TargetAssignment.exists?(player_id: new_target_id || new_target_id == nil)))
         
         player = TargetAssignment.find_by(player_id: player_id)
         player.update(target_id: new_target_id)
@@ -169,7 +169,7 @@ module Assassin
     end
   
     # Hunter has killed its target and takes a new target (victim's target)
-    # of the form /game/kill?hunter=user1&target=user2
+    # Receives JSON in request body {bodyhunter: <user1>, target: <user2>}
     post '/game/kill' do
       parsed_request_body = JSON.parse(request.body.read)
       hunter = Player.find_by(username: parsed_request_body['hunter'])
