@@ -56,19 +56,22 @@ module Assassin
       'Hello world'
     end
 
-    get '/game/players' do
-      if Game.first
-        Game.first.players.to_json
-      else
-        status 404
-      end
-    end
-
     get '/game' do
       if Game.first
         Game.first.to_json
       else
         status 404
+      end
+    end
+
+    # Expects /game/validate?username=[username]
+    # Will determine if username is unique
+    get '/game/validate' do
+      username = params[:username]
+      if Player.find_by(username: username)
+        status 403
+      else
+        status 200
       end
     end
 
@@ -91,14 +94,11 @@ module Assassin
       end
     end
 
-    # Expects /game/validate?username=[username]
-    # Will determine if username is unique
-    get '/game/validate' do
-      username = params[:username]
-      if Player.find_by(username: username)
-        status 403
+    get '/game/players' do
+      if Game.first
+        Game.first.players.to_json
       else
-        status 200
+        status 404
       end
     end
 
@@ -113,7 +113,7 @@ module Assassin
         else
           global_game.update(status: 'InProgress')
           shuffled_players = global_game.players.shuffle
-  
+
           # Circular, singly-linked list target assignment
           shuffled_players.each_with_index do |player, index|
             # Special case: last player -> first player
@@ -128,7 +128,7 @@ module Assassin
             end
           end
           status 200
-        end 
+        end
       else
         puts "Game start called before game created"
         status 404
@@ -159,14 +159,14 @@ module Assassin
     end
 
     # Expects /game/target?username=[username]
-    # Will determine the username's target
+    # Will return the Player's target
     get '/game/target' do
       username = params[:username]
       player = Player.find_by(username: username)
       if player
         target_id = TargetAssignment.lookup_assignment(player.id)
         if target_id
-          target_username = Player.find_by(id: target_id).username 
+          target_username = Player.find_by(id: target_id).username
           return { target: target_username }.to_json
         else # Target_id is nil
           return { target: "" }.to_json
@@ -174,6 +174,28 @@ module Assassin
         status 200
       else
         status 404
+      end
+    end
+
+    # Receives {username: <username>; latitude: <latitude>; longitude: <longitude>}
+    post '/game/location' do
+      req = JSON.parse(request.body.read)
+      username = req['username']
+      latitude = req['latitude']
+      longitude = req['longitude']
+
+      if latitude == nil || longitude == nil
+        status 403
+      else
+        player = Player.find_by(username: username)
+        if player
+          player.latitude = latitude
+          player.longitude = longitude
+          player.save
+          status 200
+        else
+          status 404
+        end
       end
     end
 

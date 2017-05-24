@@ -1,0 +1,256 @@
+{
+	"_type": "export",
+	"__export_format": 3,
+	"__export_date": "2017-05-23T23:39:17.363Z",
+	"__export_source": "insomnia.desktop.app:v5.0.20",
+	"resources": [
+		{
+			"_id": "wrk_50c022b5e58947818d5160435e281e3e",
+			"parentId": null,
+			"modified": 1495048655283,
+			"created": 1495048230912,
+			"name": "Assassin Server",
+			"description": "",
+			"certificates": [],
+			"_type": "workspace"
+		},
+		{
+			"_id": "env_cb36c1e29d5a45d7bb61d4bc43dfbc55",
+			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
+			"modified": 1495048386379,
+			"created": 1495048386379,
+			"name": "Base Environment",
+			"data": {},
+			"_type": "environment"
+		},
+		{
+			"_id": "jar_6157dbcfb97f45e690ecaf12744aa834",
+			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
+			"modified": 1495582492244,
+			"created": 1495048397599,
+			"name": "Default Jar",
+			"cookies": [],
+			"_type": "cookie_jar"
+		},
+		{
+			"_id": "req_c6e5cfe2091a4e198ac5dda3cc90916b",
+			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
+			"modified": 1495580367478,
+			"created": 1495048386075,
+			"url": "{{ base_url }}/hello_world",
+			"name": "hello-world",
+			"method": "GET",
+			"body": {},
+			"parameters": [],
+			"headers": [],
+			"authentication": {},
+			"metaSortKey": -1495580320958,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"_type": "request"
+		},
+		{
+			"_id": "req_35ae48e46bcf4bc0b9edb1f60e1d56a1",
+			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
+			"modified": 1495582056812,
+			"created": 1495048465853,
+			"url": "{{ base_url }}/game/players",
+			"name": "list-players",
+			"method": "GET",
+			"body": {},
+			"parameters": [],
+			"headers": [],
+			"authentication": {},
+			"metaSortKey": -1495579381467.2812,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"_type": "request"
+		},
+		{
+			"_id": "req_81e35f81b2b04f5d8eca79cba30d5c86",
+			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
+			"modified": 1495582064556,
+			"created": 1495142926589,
+			"url": "{{ base_url }}/game/start",
+			"name": "start-game",
+			"method": "POST",
+			"body": {},
+			"parameters": [],
+			"headers": [],
+			"authentication": {},
+			"metaSortKey": -1495579188053.0156,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"_type": "request"
+		},
+		{
+			"_id": "req_96bf15f12a8640d5814bd33303eb53fe",
+			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
+			"modified": 1495581934566,
+			"created": 1495577963360,
+			"url": "{{ base_url }}/game/leave",
+			"name": "leave-game",
+			"method": "POST",
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"username\": \"gm\"\n}"
+			},
+			"parameters": [],
+			"headers": [
+				{
+					"name": "Content-Type",
+					"value": "application/json",
+					"id": "pair_36ae7f8e03ba43cca139cc2a58db8384"
+				}
+			],
+			"authentication": {},
+			"metaSortKey": -1495578994638.75,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"_type": "request"
+		},
+		{
+			"_id": "req_912b9c15eb7b435ba6be2e3f58464377",
+			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
+			"modified": 1495582491647,
+			"created": 1495578552549,
+			"url": "{{ base_url }}/game/location",
+			"name": "send-location",
+			"method": "POST",
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t  \"username\": \"kycuong\",\n    \"latitude\": 44.981667, \n    \"longitude\": -93.27833\n}"
+			},
+			"parameters": [],
+			"headers": [
+				{
+					"name": "Content-Type",
+					"value": "application/json",
+					"id": "pair_ac0551b492a84a428df0d0affa20010e"
+				}
+			],
+			"authentication": {},
+			"metaSortKey": -1495578552549,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"_type": "request"
+		},
+		{
+			"_id": "req_885d6c1b5da346d18dc313b53c95549a",
+			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
+			"modified": 1495581909374,
+			"created": 1495580320908,
+			"url": "{{ base_url }}/game",
+			"name": "game-overview",
+			"method": "GET",
+			"body": {},
+			"parameters": [],
+			"headers": [],
+			"authentication": {},
+			"metaSortKey": -1495580320908,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"_type": "request"
+		},
+		{
+			"_id": "req_34af30577b4a45fb87b4439e5b9c511f",
+			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
+			"modified": 1495582406652,
+			"created": 1495581916135,
+			"url": "{{ base_url }}/game/join",
+			"name": "join-game",
+			"method": "POST",
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"username\": \"kycuong\"\n}"
+			},
+			"parameters": [],
+			"headers": [
+				{
+					"name": "Content-Type",
+					"value": "application/json",
+					"id": "pair_1ea8ca13831a42d99f1dec9be9b7daf7"
+				}
+			],
+			"authentication": {},
+			"metaSortKey": -1495579768295.8125,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"_type": "request"
+		},
+		{
+			"_id": "req_87571919ea43412992fbb06c7ab7dcf3",
+			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
+			"modified": 1495582046240,
+			"created": 1495581961257,
+			"url": "{{ base_url }}/validate?username=",
+			"name": "validate-username",
+			"method": "GET",
+			"body": {},
+			"parameters": [],
+			"headers": [],
+			"authentication": {},
+			"metaSortKey": -1495580044601.9062,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"_type": "request"
+		},
+		{
+			"_id": "req_e4db848fd1594c91b543dad2df52f5f5",
+			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
+			"modified": 1495582109457,
+			"created": 1495582076942,
+			"url": "{{ base_url }}/game/target?username=",
+			"name": "get-target",
+			"method": "GET",
+			"body": {},
+			"parameters": [],
+			"headers": [],
+			"authentication": {},
+			"metaSortKey": -1495578773593.875,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"_type": "request"
+		},
+		{
+			"_id": "env_3cef6d22df9847b58c81cc2864f98885",
+			"parentId": "env_cb36c1e29d5a45d7bb61d4bc43dfbc55",
+			"modified": 1495577632636,
+			"created": 1495577613860,
+			"name": "Production",
+			"data": {
+				"base_url": "https://assassin-server-csm117.herokuapp.com/"
+			},
+			"_type": "environment"
+		},
+		{
+			"_id": "env_aaea9d67db794a3bbd8c75db8564695a",
+			"parentId": "env_cb36c1e29d5a45d7bb61d4bc43dfbc55",
+			"modified": 1495577782871,
+			"created": 1495577757641,
+			"name": "Development",
+			"data": {
+				"base_url": "http://localhost:4567"
+			},
+			"_type": "environment"
+		}
+	]
+}
