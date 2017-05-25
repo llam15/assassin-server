@@ -46,7 +46,6 @@ class TargetAssignment < ActiveRecord::Base
         player = TargetAssignment.find_by(player_id: player_id)
         player.update(target_id: new_target_id)
       else 
-        puts "Id(s) are not valid"
         return nil
     end
   end
@@ -194,8 +193,8 @@ module Assassin
         if new_target_id == hunter.id
           Game.first.update(status: 'Ended')
         end
+        status 200
       else
-        puts "target is too far away"
         status 403
       end
     end
