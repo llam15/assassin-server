@@ -218,8 +218,6 @@ module Assassin
       end
     end
 
-
-
     # Expects /game/target?username=[username]
     # Will return the Player's target
     get '/game/target' do
