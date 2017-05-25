@@ -175,18 +175,28 @@ module Assassin
       hunter = Player.find_by(username: parsed_request_body['hunter'])
       target = Player.find_by(username: parsed_request_body['target'])
       
-      # Assign new target to hunter & set victim's target to nil
-      # If there is one player left, they will get assigned to themselves
-      new_target_id = TargetAssignment.lookup_assignment(target.id)
-      TargetAssignment.update_assignment(hunter.id, new_target_id)
-      TargetAssignment.update_assignment(target.id, nil)
+      # Validate kill claim
+      hunter_location = [hunter.latitude, hunter.longitude]
+      target_location = [target.latitude, target.longitude]
+      distance = Geocoder::Calculations.distance_between(hunter_location, target_location)
       
-      # Mark victim as "dead" (= not alive)
-      target.update(alive: false)
-      
-      # Change Game status if there is one person alive = end condition
-      if new_target_id == hunter.id
-        Game.first.update(status: 'Ended')
+      if distance < KILL_RADIUS
+        # Assign new target to hunter & set victim's target to nil
+        # If there is one player left, they will get assigned to themselves
+        new_target_id = TargetAssignment.lookup_assignment(target.id)
+        TargetAssignment.update_assignment(hunter.id, new_target_id)
+        TargetAssignment.update_assignment(target.id, nil)
+        
+        # Mark victim as "dead" (= not alive)
+        target.update(alive: false)
+        
+        # Change Game status if there is one person alive = end condition
+        if new_target_id == hunter.id
+          Game.first.update(status: 'Ended')
+        end
+      else
+        puts "target is too far away"
+        status 403
       end
     end
     
