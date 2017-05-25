@@ -1,7 +1,7 @@
 {
 	"_type": "export",
 	"__export_format": 3,
-	"__export_date": "2017-05-23T23:39:17.363Z",
+	"__export_date": "2017-05-25T22:02:13.941Z",
 	"__export_source": "insomnia.desktop.app:v5.0.20",
 	"resources": [
 		{
@@ -26,7 +26,7 @@
 		{
 			"_id": "jar_6157dbcfb97f45e690ecaf12744aa834",
 			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
-			"modified": 1495582492244,
+			"modified": 1495749704468,
 			"created": 1495048397599,
 			"name": "Default Jar",
 			"cookies": [],
@@ -195,9 +195,9 @@
 		{
 			"_id": "req_87571919ea43412992fbb06c7ab7dcf3",
 			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
-			"modified": 1495582046240,
+			"modified": 1495748997898,
 			"created": 1495581961257,
-			"url": "{{ base_url }}/validate?username=",
+			"url": "{{ base_url }}/game/validate?username=kycuong",
 			"name": "validate-username",
 			"method": "GET",
 			"body": {},
