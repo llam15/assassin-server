@@ -1,7 +1,7 @@
 {
 	"_type": "export",
 	"__export_format": 3,
-	"__export_date": "2017-05-23T23:39:17.363Z",
+	"__export_date": "2017-05-25T22:39:18.352Z",
 	"__export_source": "insomnia.desktop.app:v5.0.20",
 	"resources": [
 		{
@@ -26,7 +26,7 @@
 		{
 			"_id": "jar_6157dbcfb97f45e690ecaf12744aa834",
 			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
-			"modified": 1495582492244,
+			"modified": 1495751945951,
 			"created": 1495048397599,
 			"name": "Default Jar",
 			"cookies": [],
@@ -54,7 +54,7 @@
 		{
 			"_id": "req_35ae48e46bcf4bc0b9edb1f60e1d56a1",
 			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
-			"modified": 1495582056812,
+			"modified": 1495750473091,
 			"created": 1495048465853,
 			"url": "{{ base_url }}/game/players",
 			"name": "list-players",
@@ -120,7 +120,7 @@
 		{
 			"_id": "req_912b9c15eb7b435ba6be2e3f58464377",
 			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
-			"modified": 1495582491647,
+			"modified": 1495751715325,
 			"created": 1495578552549,
 			"url": "{{ base_url }}/game/location",
 			"name": "send-location",
@@ -195,9 +195,9 @@
 		{
 			"_id": "req_87571919ea43412992fbb06c7ab7dcf3",
 			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
-			"modified": 1495582046240,
+			"modified": 1495748997898,
 			"created": 1495581961257,
-			"url": "{{ base_url }}/validate?username=",
+			"url": "{{ base_url }}/game/validate?username=kycuong",
 			"name": "validate-username",
 			"method": "GET",
 			"body": {},
@@ -214,9 +214,9 @@
 		{
 			"_id": "req_e4db848fd1594c91b543dad2df52f5f5",
 			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
-			"modified": 1495582109457,
+			"modified": 1495750297429,
 			"created": 1495582076942,
-			"url": "{{ base_url }}/game/target?username=",
+			"url": "{{ base_url }}/game/target?username=kycuong",
 			"name": "get-target",
 			"method": "GET",
 			"body": {},
@@ -224,6 +224,25 @@
 			"headers": [],
 			"authentication": {},
 			"metaSortKey": -1495578773593.875,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"_type": "request"
+		},
+		{
+			"_id": "req_cebbfe34dde14e898eb020a485a97e59",
+			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
+			"modified": 1495751948087,
+			"created": 1495751265411,
+			"url": "{{ base_url }}/game/hint?hunter=kycuong&target=tester",
+			"name": "get-hint",
+			"method": "GET",
+			"body": {},
+			"parameters": [],
+			"headers": [],
+			"authentication": {},
+			"metaSortKey": -1495578552499,
 			"settingStoreCookies": true,
 			"settingSendCookies": true,
 			"settingDisableRenderRequestBody": false,
