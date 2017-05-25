@@ -169,7 +169,7 @@ module Assassin
     end
   
     # Hunter has killed its target and takes a new target (victim's target)
-    # Receives JSON in request body {bodyhunter: <user1>, target: <user2>}
+    # Receives JSON in request body {hunter: <user1>, target: <user2>}
     post '/game/kill' do
       parsed_request_body = JSON.parse(request.body.read)
       hunter = Player.find_by(username: parsed_request_body['hunter'])
