@@ -40,15 +40,15 @@ class TargetAssignment < ActiveRecord::Base
       return nil
     end
   end
-  
+
   def self.update_assignment(player_id, new_target_id)
-    if ((TargetAssignment.exists?(player_id: player_id)) && 
-        (TargetAssignment.exists?(player_id: new_target_id || new_target_id == nil)))
-        
-        player = TargetAssignment.find_by(player_id: player_id)
-        player.update(target_id: new_target_id)
-      else 
-        return nil
+    if ((TargetAssignment.exists?(player_id: player_id)) &&
+      (TargetAssignment.exists?(player_id: new_target_id || new_target_id == nil)))
+
+      player = TargetAssignment.find_by(player_id: player_id)
+      player.update(target_id: new_target_id)
+    else
+      return nil
     end
 
   # Find the hunter of a given player
@@ -181,29 +181,29 @@ module Assassin
         status 404
       end
     end
-  
+
     # Hunter has killed its target and takes a new target (victim's target)
     # Receives JSON in request body {hunter: <user1>, target: <user2>}
     post '/game/kill' do
       parsed_request_body = JSON.parse(request.body.read)
       hunter = Player.find_by(username: parsed_request_body['hunter'])
       target = Player.find_by(username: parsed_request_body['target'])
-      
+
       # Validate kill claim
       hunter_location = [hunter.latitude, hunter.longitude]
       target_location = [target.latitude, target.longitude]
       distance = Geocoder::Calculations.distance_between(hunter_location, target_location)
-      
+
       if distance < KILL_RADIUS
         # Assign new target to hunter & set victim's target to nil
         # If there is one player left, they will get assigned to themselves
         new_target_id = TargetAssignment.lookup_assignment(target.id)
         TargetAssignment.update_assignment(hunter.id, new_target_id)
         TargetAssignment.update_assignment(target.id, nil)
-        
+
         # Mark victim as "dead" (= not alive)
         target.update(alive: false)
-        
+
         # Change Game status if there is one person alive = end condition
         if new_target_id == hunter.id
           Game.first.update(status: 'Ended')
@@ -213,7 +213,7 @@ module Assassin
         status 403
       end
     end
-    
+
     # Expects /game/target?username=[username]
     # Will determine the username's target
     get '/game/target' do
@@ -222,7 +222,7 @@ module Assassin
       if player
         target_id = TargetAssignment.lookup_assignment(player.id)
         if target_id
-          target_username = Player.find_by(id: target_id).username 
+          target_username = Player.find_by(id: target_id).username
           return { target: target_username }.to_json
         else # Target_id is nil
           return { target: "" }.to_json
