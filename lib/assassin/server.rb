@@ -187,7 +187,7 @@ module Assassin
           player.destroy
           TargetAssignment.where(player_id: player.id).destroy_all
         end
-          status 200
+        status 200
       else
         status 404
       end
