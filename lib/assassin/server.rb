@@ -317,16 +317,16 @@ module Assassin
     # the named player is the last one standing
     post '/game/end' do
       req = JSON.parse(request.body.read)
-      username = req['username]']
+      username = req['username']
 
       player = Player.find_by(username: username)
-      alive_players = Player.all.select { |player| p.alive }
+      alive_players = Player.all.select { |player| player.alive }
 
       # Verify that this is the last player standing
       if player &&
-        player.id == TargetAssignment.lookup_assignment(player.id) &&
-        player.status == 'alive' &&
-        alive_players.size == 1
+         player.alive &&
+         alive_players.size == 1 &&
+         player.id == TargetAssignment.lookup_assignment(player.id)
 
         Game.destroy_all
         Player.destroy_all
