@@ -172,7 +172,7 @@ module Assassin
           # Assign Player's target to Player's hunter
           player_hunter = Player.find_by(id: TargetAssignment.reverse_lookup_assignment(player.id))
           player_target = Player.find_by(id: TargetAssignment.lookup_assignment(player.id))
-          TargetAssignment.update(player_hunter.id, player_target.id)
+          TargetAssignment.update_assignment(player_hunter.id, player_target.id)
 
           # Change Game status if there is one person alive = end condition
           if player_target.id == player_hunter.id
