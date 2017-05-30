@@ -41,8 +41,11 @@ class TargetAssignment < ActiveRecord::Base
   end
 
   def self.update_assignment(player_id, new_target_id)
+    #if ((TargetAssignment.exists?(player_id: player_id)) &&
+    #  (TargetAssignment.exists?(player_id: new_target_id || new_target_id == nil)))
+
     if ((TargetAssignment.exists?(player_id: player_id)) &&
-      (TargetAssignment.exists?(player_id: new_target_id || new_target_id == nil)))
+       (TargetAssignment.exists?(player_id: new_target_id) || new_target_id == nil))
 
       player = TargetAssignment.find_by(player_id: player_id)
       player.update(target_id: new_target_id)
