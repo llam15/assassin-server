@@ -324,13 +324,17 @@ module Assassin
 
       # Verify that this is the last player standing
       if player &&
-         player.id == TargetAssignment.lookup_assignment(player.id) &&
-         player.status == 'alive' &&
-         alive_players.size == 1
+        player.id == TargetAssignment.lookup_assignment(player.id) &&
+        player.status == 'alive' &&
+        alive_players.size == 1
 
-         Game.destroy_all
-         Player.destroy_all
-         TargetAssignment.destroy_all
+        Game.destroy_all
+        Player.destroy_all
+        TargetAssignment.destroy_all
+
+        status 200
+      else
+        status 403
       end
     end
 
