@@ -157,7 +157,7 @@ module Assassin
     end
 
     # Receives {username: <username>}
-    # Used for a user leaving the lobby
+    # Used for a user leaving the game
     # Will end game if game master leaves
     post '/game/leave' do
       parsed_request_body = JSON.parse(request.body.read)
@@ -168,9 +168,22 @@ module Assassin
           Game.first.destroy
           TargetAssignment.delete_all
         else
+          # Player (not GM) leaves the game: 
+          # Assign Player's target to Player's hunter
+          player_hunter = Player.find_by(id: TargetAssignment.reverse_lookup_assignment(player.id))
+          player_target = Player.find_by(id: TargetAssignment.lookup_assignment(player.id))
+          TargetAssignment.update(player_hunter.id, player_target.id)
+
+          # Change Game status if there is one person alive = end condition
+          if player_target.id == player_hunter.id
+            Game.first.update(status: 'Ended')
+          end
+          
+          # Remove player from player's list and its TargetAssignments
           player.destroy
+          TargetAssignment.where(player_id: player.id).destroy_all
         end
-      status 200
+          status 200
       else
         status 404
       end
