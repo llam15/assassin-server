@@ -164,12 +164,16 @@ module Assassin
       username = parsed_request_body['username']
       player = Player.find_by(username: username)
       if player
-        if player.role == "GameMaster"
-          Game.first.destroy
-          TargetAssignment.delete_all
+        # Leaving the game while the game is setting up
+        if Game.first.status == "SettingUp"
+          if player.role == "GameMaster"
+            Game.first.destroy
+            TargetAssignment.delete_all
+          else
+            player.destroy
+          end
         else
-          # Player (not GM) leaves the game: 
-          # Assign Player's target to Player's hunter
+          # Leaving the game while game is in play
           player_hunter = Player.find_by(id: TargetAssignment.reverse_lookup_assignment(player.id))
           player_target = Player.find_by(id: TargetAssignment.lookup_assignment(player.id))
           TargetAssignment.update_assignment(player_hunter.id, player_target.id)
