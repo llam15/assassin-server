@@ -168,7 +168,7 @@ module Assassin
         if Game.first.status == "SettingUp"
           if player.role == "GameMaster"
             Game.first.destroy
-            TargetAssignment.delete_all
+            TargetAssignment.destroy_all
           else
             player.destroy
           end
@@ -182,7 +182,7 @@ module Assassin
           if player_target.id == player_hunter.id
             Game.first.update(status: 'Ended')
           end
-          
+
           # Remove player from player's list and its TargetAssignments
           player.destroy
           TargetAssignment.where(player_id: player.id).destroy_all
@@ -199,15 +199,15 @@ module Assassin
       parsed_request_body = JSON.parse(request.body.read)
       hunter = Player.find_by(username: parsed_request_body['hunter'])
       target = Player.find_by(username: parsed_request_body['target'])
-      
-      
+
+
       # Validate kill claim
       # 1. distance < 3 meters
       # 2. target is hunter's assigned target
       hunter_location = [hunter.latitude, hunter.longitude]
       target_location = [target.latitude, target.longitude]
       distance = Geocoder::Calculations.distance_between(hunter_location, target_location)
-      
+
       if distance < KILL_RADIUS && target.id == TargetAssignment.lookup_assignment(hunter.id)
         # Assign new target to hunter & set victim's target to nil
         # If there is one player left, they will get assigned to themselves
@@ -311,7 +311,29 @@ module Assassin
         status 404
       end
     end
-    
+
+    # Accepts { username: <username> }
+    # Ends the game and resets all internal data if
+    # the named player is the last one standing
+    post '/game/end' do
+      req = JSON.parse(request.body.read)
+      username = req['username]']
+
+      player = Player.find_by(username: username)
+      alive_players = Player.all.select { |player| p.alive }
+
+      # Verify that this is the last player standing
+      if player &&
+         player.id == TargetAssignment.lookup_assignment(player.id) &&
+         player.status == 'alive' &&
+         alive_players.size == 1
+
+         Game.destroy_all
+         Player.destroy_all
+         TargetAssignment.destroy_all
+      end
+    end
+
     # Allow direct execution of the app via 'ruby server.rb'
     run! if app_file == $0
   end
