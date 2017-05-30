@@ -1,13 +1,13 @@
 {
 	"_type": "export",
 	"__export_format": 3,
-	"__export_date": "2017-05-25T22:39:18.352Z",
-	"__export_source": "insomnia.desktop.app:v5.0.20",
+	"__export_date": "2017-05-30T05:27:03.156Z",
+	"__export_source": "insomnia.desktop.app:v5.1.1",
 	"resources": [
 		{
 			"_id": "wrk_50c022b5e58947818d5160435e281e3e",
 			"parentId": null,
-			"modified": 1495048655283,
+			"modified": 1496120405328,
 			"created": 1495048230912,
 			"name": "Assassin Server",
 			"description": "",
@@ -17,7 +17,7 @@
 		{
 			"_id": "env_cb36c1e29d5a45d7bb61d4bc43dfbc55",
 			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
-			"modified": 1495048386379,
+			"modified": 1496120405325,
 			"created": 1495048386379,
 			"name": "Base Environment",
 			"data": {},
@@ -26,7 +26,7 @@
 		{
 			"_id": "jar_6157dbcfb97f45e690ecaf12744aa834",
 			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
-			"modified": 1495751945951,
+			"modified": 1496120405323,
 			"created": 1495048397599,
 			"name": "Default Jar",
 			"cookies": [],
@@ -35,7 +35,7 @@
 		{
 			"_id": "req_c6e5cfe2091a4e198ac5dda3cc90916b",
 			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
-			"modified": 1495580367478,
+			"modified": 1496120405319,
 			"created": 1495048386075,
 			"url": "{{ base_url }}/hello_world",
 			"name": "hello-world",
@@ -54,7 +54,7 @@
 		{
 			"_id": "req_35ae48e46bcf4bc0b9edb1f60e1d56a1",
 			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
-			"modified": 1495750473091,
+			"modified": 1496120405316,
 			"created": 1495048465853,
 			"url": "{{ base_url }}/game/players",
 			"name": "list-players",
@@ -73,7 +73,7 @@
 		{
 			"_id": "req_81e35f81b2b04f5d8eca79cba30d5c86",
 			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
-			"modified": 1495582064556,
+			"modified": 1496120405313,
 			"created": 1495142926589,
 			"url": "{{ base_url }}/game/start",
 			"name": "start-game",
@@ -92,7 +92,7 @@
 		{
 			"_id": "req_96bf15f12a8640d5814bd33303eb53fe",
 			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
-			"modified": 1495581934566,
+			"modified": 1496120405310,
 			"created": 1495577963360,
 			"url": "{{ base_url }}/game/leave",
 			"name": "leave-game",
@@ -120,7 +120,7 @@
 		{
 			"_id": "req_912b9c15eb7b435ba6be2e3f58464377",
 			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
-			"modified": 1495751715325,
+			"modified": 1496121979693,
 			"created": 1495578552549,
 			"url": "{{ base_url }}/game/location",
 			"name": "send-location",
@@ -148,7 +148,7 @@
 		{
 			"_id": "req_885d6c1b5da346d18dc313b53c95549a",
 			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
-			"modified": 1495581909374,
+			"modified": 1496120405303,
 			"created": 1495580320908,
 			"url": "{{ base_url }}/game",
 			"name": "game-overview",
@@ -167,7 +167,7 @@
 		{
 			"_id": "req_34af30577b4a45fb87b4439e5b9c511f",
 			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
-			"modified": 1495582406652,
+			"modified": 1496120405301,
 			"created": 1495581916135,
 			"url": "{{ base_url }}/game/join",
 			"name": "join-game",
@@ -195,7 +195,7 @@
 		{
 			"_id": "req_87571919ea43412992fbb06c7ab7dcf3",
 			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
-			"modified": 1495748997898,
+			"modified": 1496120405300,
 			"created": 1495581961257,
 			"url": "{{ base_url }}/game/validate?username=kycuong",
 			"name": "validate-username",
@@ -214,7 +214,7 @@
 		{
 			"_id": "req_e4db848fd1594c91b543dad2df52f5f5",
 			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
-			"modified": 1495750297429,
+			"modified": 1496121995935,
 			"created": 1495582076942,
 			"url": "{{ base_url }}/game/target?username=kycuong",
 			"name": "get-target",
@@ -233,9 +233,9 @@
 		{
 			"_id": "req_cebbfe34dde14e898eb020a485a97e59",
 			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
-			"modified": 1495751948087,
+			"modified": 1496121987828,
 			"created": 1495751265411,
-			"url": "{{ base_url }}/game/hint?hunter=kycuong&target=tester",
+			"url": "{{ base_url }}/game/hint?hunter=kycuong&target=bnery",
 			"name": "get-hint",
 			"method": "GET",
 			"body": {},
@@ -250,9 +250,37 @@
 			"_type": "request"
 		},
 		{
+			"_id": "req_bf412f1d3def424481af7c02b9f4382b",
+			"parentId": "wrk_50c022b5e58947818d5160435e281e3e",
+			"modified": 1496122011851,
+			"created": 1496121697898,
+			"url": "{{base_url}}/game/kill",
+			"name": "kill-target",
+			"method": "POST",
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t  \"hunter\": \"kycuong\",\n    \"target\": \"bnery\"\n}"
+			},
+			"parameters": [],
+			"headers": [
+				{
+					"name": "Content-Type",
+					"value": "application/json",
+					"id": "pair_eac74fb752ce418897436f965f205dd2"
+				}
+			],
+			"authentication": {},
+			"metaSortKey": -1496121697898,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"_type": "request"
+		},
+		{
 			"_id": "env_3cef6d22df9847b58c81cc2864f98885",
 			"parentId": "env_cb36c1e29d5a45d7bb61d4bc43dfbc55",
-			"modified": 1495577632636,
+			"modified": 1496120405295,
 			"created": 1495577613860,
 			"name": "Production",
 			"data": {
@@ -263,7 +291,7 @@
 		{
 			"_id": "env_aaea9d67db794a3bbd8c75db8564695a",
 			"parentId": "env_cb36c1e29d5a45d7bb61d4bc43dfbc55",
-			"modified": 1495577782871,
+			"modified": 1496120405291,
 			"created": 1495577757641,
 			"name": "Development",
 			"data": {
