@@ -328,9 +328,12 @@ module Assassin
          alive_players.size == 1 &&
          player.id == TargetAssignment.lookup_assignment(player.id)
 
+        # While Games and Players are interdependent (we have
+        # :destroy callbacks), TargetAssignment's have no
+        # dependents and can be deleted as a row
         Game.destroy_all
         Player.destroy_all
-        TargetAssignment.destroy_all
+        TargetAssignment.delete_all
 
         status 200
       else
