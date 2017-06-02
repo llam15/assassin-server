@@ -276,11 +276,16 @@ module Assassin
           ready_for_kill = Geocoder::Calculations.distance_between(player_location, target_location) < KILL_RADIUS
           # Is our hunter close enough to kill us?
           in_danger = Geocoder::Calculations.distance_between(player_location, hunter_location) < KILL_RADIUS
+          
+          # Obtain user's target
+          target_id = TargetAssignment.lookup_assignment(player.id)
+          target_username = Player.find_by(id: target_id).username
 
           status 200
           return { ready_for_kill: ready_for_kill,
                    in_danger: in_danger,
-                   alive: player.alive
+                   alive: player.alive,
+                   target: target_username
                  }.to_json
         else
           status 404
