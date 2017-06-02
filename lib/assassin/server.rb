@@ -157,37 +157,20 @@ module Assassin
     end
 
     # Receives {username: <username>}
-    # Used for a user leaving the game
+    # Used for a user leaving the lobby
     # Will end game if game master leaves
     post '/game/leave' do
       parsed_request_body = JSON.parse(request.body.read)
       username = parsed_request_body['username']
       player = Player.find_by(username: username)
       if player
-        # Leaving the game while the game is setting up
-        if Game.first.status == "SettingUp"
-          if player.role == "GameMaster"
-            Game.first.destroy
-            TargetAssignment.destroy_all
-          else
-            player.destroy
-          end
+        if player.role == "GameMaster"
+          Game.first.destroy
+          TargetAssignment.delete_all
         else
-          # Leaving the game while game is in play
-          player_hunter = Player.find_by(id: TargetAssignment.reverse_lookup_assignment(player.id))
-          player_target = Player.find_by(id: TargetAssignment.lookup_assignment(player.id))
-          TargetAssignment.update_assignment(player_hunter.id, player_target.id)
-
-          # Change Game status if there is one person alive = end condition
-          if player_target.id == player_hunter.id
-            Game.first.update(status: 'Ended')
-          end
-
-          # Remove player from player's list and its TargetAssignments
           player.destroy
-          TargetAssignment.where(player_id: player.id).destroy_all
         end
-        status 200
+      status 200
       else
         status 404
       end
@@ -199,15 +182,15 @@ module Assassin
       parsed_request_body = JSON.parse(request.body.read)
       hunter = Player.find_by(username: parsed_request_body['hunter'])
       target = Player.find_by(username: parsed_request_body['target'])
-
-
+      
+      
       # Validate kill claim
       # 1. distance < 3 meters
       # 2. target is hunter's assigned target
       hunter_location = [hunter.latitude, hunter.longitude]
       target_location = [target.latitude, target.longitude]
       distance = Geocoder::Calculations.distance_between(hunter_location, target_location)
-
+      
       if distance < KILL_RADIUS && target.id == TargetAssignment.lookup_assignment(hunter.id)
         # Assign new target to hunter & set victim's target to nil
         # If there is one player left, they will get assigned to themselves
@@ -276,11 +259,16 @@ module Assassin
           ready_for_kill = Geocoder::Calculations.distance_between(player_location, target_location) < KILL_RADIUS
           # Is our hunter close enough to kill us?
           in_danger = Geocoder::Calculations.distance_between(player_location, hunter_location) < KILL_RADIUS
+          
+          # Obtain target of user
+          target_id = TargetAssignment.lookup_assignment(player.id)
+          target_username = Player.find_by(id: target_id).username
 
           status 200
           return { ready_for_kill: ready_for_kill,
                    in_danger: in_danger,
-                   alive: player.alive
+                   alive: player.alive,
+                   target: target_username
                  }.to_json
         else
           status 404
@@ -311,36 +299,7 @@ module Assassin
         status 404
       end
     end
-
-    # Accepts { username: <username> }
-    # Ends the game and resets all internal data if
-    # the named player is the last one standing
-    post '/game/end' do
-      req = JSON.parse(request.body.read)
-      username = req['username']
-
-      player = Player.find_by(username: username)
-      alive_players = Player.all.select { |player| player.alive }
-
-      # Verify that this is the last player standing
-      if player &&
-         player.alive &&
-         alive_players.size == 1 &&
-         player.id == TargetAssignment.lookup_assignment(player.id)
-
-        # While Games and Players are interdependent (we have
-        # :destroy callbacks), TargetAssignment's have no
-        # dependents and can be deleted as a row
-        Game.destroy_all
-        Player.destroy_all
-        TargetAssignment.delete_all
-
-        status 200
-      else
-        status 403
-      end
-    end
-
+    
     # Allow direct execution of the app via 'ruby server.rb'
     run! if app_file == $0
   end
