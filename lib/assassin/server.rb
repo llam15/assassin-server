@@ -70,7 +70,9 @@ end
 
 module Assassin
   VERSION = '0.1.0'
-  KILL_RADIUS = 0.01 # kilometers, i.e., 10 meters
+  # In testing, we found that GPS could report a 10-15 meter difference,
+  # even when phones were right next to each other
+  KILL_RADIUS = 0.02 # kilometers, i.e., 20 meters
 
   class AssassinServer < Sinatra::Application
     # Centralize database config details in one place
