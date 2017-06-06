@@ -2,6 +2,8 @@
 
 ![Travis CI](https://travis-ci.org/llam15/assassin-server.svg?branch=master)
 
+GPS Assassins is a mobile-based multiplayer game that uses GPS to let players physically compete in this adaptation of tag. Every player receives a target to assassinate (and are similarly assigned to another player). As targets are taken out, players are reassigned to each other in the quickly dwindling pool. The last player standing wins.
+
 Client side located at https://github.com/meeshic/assassin-client.
 
 Completed for CS M117 during the Spring 2017 quarter at UCLA. 
