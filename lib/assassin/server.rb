@@ -70,7 +70,7 @@ end
 
 module Assassin
   VERSION = '0.1.0'
-  KILL_RADIUS = 0.003 # kilometers, i.e., 3 meters
+  KILL_RADIUS = 0.01 # kilometers, i.e., 10 meters
 
   class AssassinServer < Sinatra::Application
     # Centralize database config details in one place
