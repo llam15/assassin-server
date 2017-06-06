@@ -2,6 +2,8 @@
 
 ![Travis CI](https://travis-ci.org/llam15/assassin-server.svg?branch=master)
 
+Client side located at https://github.com/meeshic/assassin-client.
+
 Completed for CS M117 during the Spring 2017 quarter at UCLA. 
 
 Team: 
